@@ -1,93 +1,141 @@
-import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Chateau} from "../../DTO/Chateau";
+import {ChateauService} from "../../services/chateau.service";
+import {User} from "../../DTO/User";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-address-form',
   templateUrl: './address-form.component.html',
   styleUrls: ['./address-form.component.css']
 })
-export class AddressFormComponent {
+
+
+export class AddressFormComponent implements  OnInit {
+
+  constructor(private fb: FormBuilder, private chateauService : ChateauService) {}
+
+  chateau! : Chateau;
+  autocomplete! : any;
+
   addressForm = this.fb.group({
-    company: null,
-    firstName: [null, Validators.required],
-    lastName: [null, Validators.required],
-    address: [null, Validators.required],
-    address2: null,
-    city: [null, Validators.required],
-    state: [null, Validators.required],
-    postalCode: [null, Validators.compose([
-      Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-    ],
-    shipping: ['free', Validators.required]
-  });
+    name: null,
+  })
 
-  hasUnitNumber = false;
-
-  states = [
-    {name: 'Alabama', abbreviation: 'AL'},
-    {name: 'Alaska', abbreviation: 'AK'},
-    {name: 'American Samoa', abbreviation: 'AS'},
-    {name: 'Arizona', abbreviation: 'AZ'},
-    {name: 'Arkansas', abbreviation: 'AR'},
-    {name: 'California', abbreviation: 'CA'},
-    {name: 'Colorado', abbreviation: 'CO'},
-    {name: 'Connecticut', abbreviation: 'CT'},
-    {name: 'Delaware', abbreviation: 'DE'},
-    {name: 'District Of Columbia', abbreviation: 'DC'},
-    {name: 'Federated States Of Micronesia', abbreviation: 'FM'},
-    {name: 'Florida', abbreviation: 'FL'},
-    {name: 'Georgia', abbreviation: 'GA'},
-    {name: 'Guam', abbreviation: 'GU'},
-    {name: 'Hawaii', abbreviation: 'HI'},
-    {name: 'Idaho', abbreviation: 'ID'},
-    {name: 'Illinois', abbreviation: 'IL'},
-    {name: 'Indiana', abbreviation: 'IN'},
-    {name: 'Iowa', abbreviation: 'IA'},
-    {name: 'Kansas', abbreviation: 'KS'},
-    {name: 'Kentucky', abbreviation: 'KY'},
-    {name: 'Louisiana', abbreviation: 'LA'},
-    {name: 'Maine', abbreviation: 'ME'},
-    {name: 'Marshall Islands', abbreviation: 'MH'},
-    {name: 'Maryland', abbreviation: 'MD'},
-    {name: 'Massachusetts', abbreviation: 'MA'},
-    {name: 'Michigan', abbreviation: 'MI'},
-    {name: 'Minnesota', abbreviation: 'MN'},
-    {name: 'Mississippi', abbreviation: 'MS'},
-    {name: 'Missouri', abbreviation: 'MO'},
-    {name: 'Montana', abbreviation: 'MT'},
-    {name: 'Nebraska', abbreviation: 'NE'},
-    {name: 'Nevada', abbreviation: 'NV'},
-    {name: 'New Hampshire', abbreviation: 'NH'},
-    {name: 'New Jersey', abbreviation: 'NJ'},
-    {name: 'New Mexico', abbreviation: 'NM'},
-    {name: 'New York', abbreviation: 'NY'},
-    {name: 'North Carolina', abbreviation: 'NC'},
-    {name: 'North Dakota', abbreviation: 'ND'},
-    {name: 'Northern Mariana Islands', abbreviation: 'MP'},
-    {name: 'Ohio', abbreviation: 'OH'},
-    {name: 'Oklahoma', abbreviation: 'OK'},
-    {name: 'Oregon', abbreviation: 'OR'},
-    {name: 'Palau', abbreviation: 'PW'},
-    {name: 'Pennsylvania', abbreviation: 'PA'},
-    {name: 'Puerto Rico', abbreviation: 'PR'},
-    {name: 'Rhode Island', abbreviation: 'RI'},
-    {name: 'South Carolina', abbreviation: 'SC'},
-    {name: 'South Dakota', abbreviation: 'SD'},
-    {name: 'Tennessee', abbreviation: 'TN'},
-    {name: 'Texas', abbreviation: 'TX'},
-    {name: 'Utah', abbreviation: 'UT'},
-    {name: 'Vermont', abbreviation: 'VT'},
-    {name: 'Virgin Islands', abbreviation: 'VI'},
-    {name: 'Virginia', abbreviation: 'VA'},
-    {name: 'Washington', abbreviation: 'WA'},
-    {name: 'West Virginia', abbreviation: 'WV'},
-    {name: 'Wisconsin', abbreviation: 'WI'},
-    {name: 'Wyoming', abbreviation: 'WY'}
-  ];
-
-  constructor(private fb: FormBuilder) {}
+  ngOnInit() {
+  this.autocomplete = this.initAutocomplete();
+  this.Map();
+  }
 
   onSubmit(): void {
     alert('Thanks!');
+    console.log("adresse envoyé au back = " + this.chateau.locality);
   }
+
+    public initAutocomplete() {
+      let address1Field = document.querySelector("#searchAddress") as HTMLInputElement;
+      this.autocomplete = new google.maps.places.Autocomplete(address1Field, {
+        componentRestrictions: {country: ["FR"]},
+        fields: ["address_components", "geometry"],
+        types: ["address"],
+      });
+      address1Field.focus();
+        this.autocomplete.addListener("place_changed", this.fillInAddress);
+        this.autocomplete.addListener("place_changed", this.Map)
+    }
+
+    public fillInAddress(autocomplete : any) {
+      let address1Field = document.querySelector("#searchAddress") as HTMLInputElement;
+      let address2Field = document.querySelector("#address2") as HTMLInputElement;
+      let postalField = document.querySelector("#postcode") as HTMLInputElement;
+      // Get the place details from the autocomplete object.
+      const place = autocomplete.getPlace();
+      let address1 = "";
+      let postcode = "";
+      // Get each component of the address from the place details,
+      // and then fill-in the corresponding field on the form.
+      // place.address_components are google.maps.GeocoderAddressComponent objects
+      // which are documented at http://goo.gle/3l5i5Mr
+      if(autocomplete !== undefined){
+        console.log("autocomplete = " + autocomplete.value)
+      for (const component of place.address_components as google.maps.GeocoderAddressComponent[]) {
+        // @ts-ignore remove once typings fixed
+        const componentType = component.types[0];
+        switch (componentType) {
+          case "street_number": {
+            address1 = `${component.long_name} ${address1}`;
+            break;
+          }
+          case "route": {
+            address1 += component.short_name;
+            break;
+          }
+          case "postal_code": {
+            postcode = `${component.long_name}${postcode}`;
+            break;
+          }
+          case "postal_code_suffix": {
+            postcode = `${postcode}-${component.long_name}`;
+            break;
+          }
+          case "locality":
+            (document.querySelector("#locality") as HTMLInputElement).value =
+              component.long_name;
+            break;
+          case "administrative_area_level_1": {
+            (document.querySelector("#state") as HTMLInputElement).value =
+              component.short_name;
+            break;
+          }
+          case "country": {
+            (document.querySelector("#country") as HTMLInputElement).value =
+              component.long_name;
+            break;
+          }
+        }
+        address1Field.value = address1;
+        console.log("adresse = " + address1);
+        postalField.value = postcode;
+        this.chateau.locality = (document.querySelector("#locality") as HTMLInputElement).value
+      }
+        // After filling the form with address components from the Autocomplete
+        // prediction, set cursor focus on the second address line to encourage
+        // entry of subpremise information such as apartment, unit, or floor number.
+        address2Field.focus();
+      }
+    }
+
+    public Map(): void {
+      const place = this.autocomplete.getPlace();
+      const map = new google.maps.Map(
+        document.getElementById("map") as HTMLElement,
+        {
+          center: {lat: 44.837789, lng: -0.57918},
+          zoom: 8,
+          mapTypeControl: false,
+        }
+      );
+      const marker = new google.maps.Marker({
+        map,
+        anchorPoint: new google.maps.Point(0, -29),
+      });
+      if (!place.geometry || !place.geometry.location) {
+        // User entered the name of a Place that was not suggested and
+        // pressed the Enter key, or the Place Details request failed.
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+      // If the place has a geometry, then present it on a map.
+      if (place.geometry.viewport) {
+        map.fitBounds(place.geometry.viewport);
+      } else {
+        map.setCenter(place.geometry.location);
+        map.setZoom(13);
+      }
+      marker.setPosition(place.geometry.location);
+      marker.setVisible(true);
+    }
 }
+
+

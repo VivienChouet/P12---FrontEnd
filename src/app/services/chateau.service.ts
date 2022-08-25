@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import { Chateau} from "../../DTO/Chateau";
+import { Chateau} from "src/app/DTO/Chateau";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -10,17 +10,15 @@ export class ChateauService {
 
   constructor(private http: HttpClient) { }
 
-
-
   addChateau(chateau : Chateau){
+    console.log("état des données : " + chateau.locality)
     return this.http.post(
       "http://localhost:8080/chateau/",
       {
         "name" : chateau.name,
         "numero_adresse" : chateau.numero_adresse,
         "code_postal" : chateau.code_postal,
-        "adresse" : chateau.adresse ,
-        "responsable" : chateau.responsable
+        "adresse" : chateau.searchAddress ,
       }
     )
   }

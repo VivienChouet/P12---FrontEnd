@@ -1,18 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Files } from 'src/app/DTO/Files';
+import { Slide } from 'src/app/DTO/Slide';
 
 @Component({
   selector: 'app-image',
   templateUrl: './image.component.html',
-  styleUrls: ['./image.component.scss']
+  styleUrls: ['./image.component.css']
 })
 export class ImageComponent implements OnInit {
 
 
   constructor(private sanitizer: DomSanitizer ) {}
 
-  @Input() files! : Files;
+  @Input() slide! : Slide;
   @Input() size! : any;
   image : any;
 
@@ -22,8 +22,7 @@ export class ImageComponent implements OnInit {
   }
 
   getImage(){
-    console.log(this.files.data)
-    const objectURL = 'data:image/jpeg;base64,' + this.files.data;
+    const objectURL = 'data:image/jpeg;base64,' + this.slide.data;
     this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL)
   }
 

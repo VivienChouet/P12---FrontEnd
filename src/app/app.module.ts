@@ -29,13 +29,12 @@ import { RatingComponent } from './utility/rating/rating.component';
 import { LoginComponent } from './page/auth/login/login.component';
 import { RegisterComponent } from './page/auth/register/register.component';
 import { MapComponent } from './utility/map/map.component';
-import { FormComponent } from './commentaire/form/form.component';
-import { DetailComponent } from './commentaire/detail/detail.component';
-import { CommonModule} from "@angular/common";
-import { HttpClientModule} from "@angular/common/http";
-import { MatCarouselModule} from "@ngmodule/material-carousel";
-
-
+import { CommentaireFormComponent } from './commentaire/commentaire-form/commentaire-form.component';
+import { DetailComponent } from './commentaire/commentaire-detail/detail.component';
+import { CommonModule } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { ChateauFormComponent } from './page/chateau-form/chateau-form.component';
 
 @NgModule({
   declarations: [
@@ -52,8 +51,9 @@ import { MatCarouselModule} from "@ngmodule/material-carousel";
     LoginComponent,
     RegisterComponent,
     MapComponent,
-    FormComponent,
+    CommentaireFormComponent,
     DetailComponent,
+    ChateauFormComponent,
 
   ],
 
@@ -77,7 +77,7 @@ import { MatCarouselModule} from "@ngmodule/material-carousel";
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
-    MatCarouselModule.forRoot(),
+    CarouselModule
   ],
 
   providers: [],

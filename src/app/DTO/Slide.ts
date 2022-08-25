@@ -1,5 +1,4 @@
-
-export interface Files 
+export interface Slide
 {
     id : number;
     name : String;

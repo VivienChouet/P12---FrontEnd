@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { UploadService} from "../../services/upload.service";
-import {Files} from "../../DTO/Files";
+import {Slide} from "../../DTO/Slide";
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-carousel',
@@ -10,20 +11,36 @@ import {Files} from "../../DTO/Files";
 export class CarouselComponent implements OnInit {
 
   @Input() chateau! : number;
-  slides! : Files[]
+  slide! : Slide;
+  slidestores! : Slide[] ;
 
-  constructor(private uploadService: UploadService) {
-  }
+  currentSlide = 0;
+
+  constructor(private uploadService : UploadService) { }
 
   ngOnInit(): void {
-    this.getListImage();
+    this.getListFiles()
   }
 
-  getListImage(){
-    this.uploadService.getFilesByChateauId(this.chateau).subscribe(slides => {
-      this.slides = slides;
+  getListFiles(){
+    this.uploadService.getFilesByChateauId(this.chateau).subscribe(slidestores => {
+      this.slidestores = slidestores,
+        console.log(slidestores);
     })
+  }
 
+  onPreviousClick() {
+    const previous = this.currentSlide - 1;
+    this.currentSlide = previous < 0 ? this.slidestores.length - 1 : previous;
+    console.log("previous clicked, new current slide is: ", this.currentSlide);
+  }
+
+  onNextClick() {
+    const next = this.currentSlide + 1;
+    this.currentSlide = next === this.slidestores.length ? 0 : next;
+    console.log("next clicked, new current slide is: ", this.currentSlide);
   }
 
 }
+
+

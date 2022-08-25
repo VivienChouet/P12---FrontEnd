@@ -1,100 +1,92 @@
-<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
-  <mat-card class="shipping-card">
+<!-- Note: The address components in this sample are based on North American address format. You might need to adjust them for the locations relevant to your app. For more information, see
+https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
+-->
+
+<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()" >
+  <mat-card class="Information-card">
     <mat-card-header>
-      <mat-card-title>Shipping Information</mat-card-title>
+      <mat-card-title>Chateau Information</mat-card-title>
     </mat-card-header>
-    <mat-card-content>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Company" formControlName="company">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="First name" formControlName="firstName">
-            <mat-error *ngIf="addressForm.controls['firstName'].hasError('required')">
-              First name is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Last name" formControlName="lastName">
-            <mat-error *ngIf="addressForm.controls['lastName'].hasError('required')">
-              Last name is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <textarea matInput placeholder="Address" formControlName="address"></textarea>
-            <mat-error *ngIf="addressForm.controls['address'].hasError('required')">
-              Address is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row" *ngIf="!hasUnitNumber">
-        <div class="col">
-          <button mat-button type="button" (click)="hasUnitNumber = !hasUnitNumber">
-            + Add C/O, Apt, Suite, Unit
-          </button>
-        </div>
-      </div>
-      <div class="row" *ngIf="hasUnitNumber">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <textarea matInput placeholder="Address 2" formControlName="address2"></textarea>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput placeholder="City" formControlName="city">
-            <mat-error *ngIf="addressForm.controls['city'].hasError('required')">
-              City is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field class="full-width">
-            <mat-select placeholder="State" formControlName="state">
-              <mat-option *ngFor="let state of states" [value]="state.abbreviation">
-                {{ state.name }}
-              </mat-option>
-            </mat-select>
-            <mat-error *ngIf="addressForm.controls['state'].hasError('required')">
-              State is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput #postalCode maxlength="5" placeholder="Postal Code" type="number" formControlName="postalCode">
-            <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <mat-radio-group formControlName="shipping">
-            <mat-radio-button value="free">Free Shipping</mat-radio-button>
-            <mat-radio-button value="priority">Priority Shipping</mat-radio-button>
-            <mat-radio-button value="nextday">Next Day Shipping</mat-radio-button>
-          </mat-radio-group>
-        </div>
-      </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
-    </mat-card-actions>
+<mat-card-content>
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Nom du chateau" formControlName="name">
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+  <mat-form-field class="full-width">
+    <input matInput
+           placeholder="Adresse"
+           id="searchAddress"
+           name="searchAddress"
+           required
+           autocomplete="off"
+    />
+
+  </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+    <input matInput placeholder="Complément d'adresse" id="address2" name="address2" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+    <input matInput placeholder="Ville" id="locality" formControlName="locality" required />
+      </mat-form-field>
+    </div>
+<div class="col">
+  <mat-form-field class="full-width">
+       <input matInput placeholder="Région" id="state" name="state" required />
+  </mat-form-field>
+</div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field class="full-width">
+    <input matInput #postcode maxlength="5" placeholder="Code Postal" id="postcode" name="postcode" required />
+        <mat-hint align="end">{{postcode.value.length}} / 5</mat-hint>
+     </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="full-width">
+    <input matInput placeholder="Pays" id="country" name="country" required />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="col" >
+    <mat-form-field class="full-width">
+      <input matInput placeholder="lat" id="lat" name="lat" required />
+    </mat-form-field>
+  </div>
+</mat-card-content>
+  <button mat-raised-button color="primary" type="submit">Valider</button>
+
+  <!-- Reset button provided for development testing convenience.
+Not recommended for user-facing forms due to risk of mis-click when aiming for Submit button. -->
+  <button mat-raised-button color="primary" type="reset" style="margin-left: 10rem" >Effacer</button>
   </mat-card>
 </form>
+
+
+<div id="map"></div>
+<div id="infowindow-content">
+  <span id="place-name" class="title"></span><br />
+  <span id="place-address"></span>
+</div>
+
+<!-- Replace Powered By Google image src with self hosted image. https://developers.google.com/maps/documentation/places/web-service/policies#other_attribution_requirements -->
+<img
+  class="powered-by-google"
+  src="https://storage.googleapis.com/geo-devrel-public-buckets/powered_by_google_on_white.png"
+  alt="Powered by Google"
+/>
+
+

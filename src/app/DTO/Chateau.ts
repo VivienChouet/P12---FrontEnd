@@ -5,8 +5,11 @@ export interface Chateau {
   id : number;
   name : String;
   numero_adresse : Number;
-  adresse : String;
+  searchAddress : String;
+  locality : string;
   code_postal : Number;
+  lattitude : number;
+  longitude : number;
   description : String;
   responsable : User;
 }

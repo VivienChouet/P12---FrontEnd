@@ -8,7 +8,7 @@ import { UtilityService } from 'src/app/services/utility.service';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.scss']
+  styleUrls: ['./upload.component.css']
 })
 export class UploadComponent implements OnInit {
 
