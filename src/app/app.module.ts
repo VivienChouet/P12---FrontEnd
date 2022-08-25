@@ -33,8 +33,8 @@ import { CommentaireFormComponent } from './commentaire/commentaire-form/comment
 import { DetailComponent } from './commentaire/commentaire-detail/detail.component';
 import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
-import { CarouselModule } from 'ngx-owl-carousel-o';
-import { ChateauFormComponent } from './page/chateau-form/chateau-form.component';
+import { CarouselModule } from 'ngx-owl-carousel-o'; 
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 @NgModule({
   declarations: [
@@ -52,8 +52,7 @@ import { ChateauFormComponent } from './page/chateau-form/chateau-form.component
     RegisterComponent,
     MapComponent,
     CommentaireFormComponent,
-    DetailComponent,
-    ChateauFormComponent,
+    DetailComponent
 
   ],
 
@@ -77,7 +76,8 @@ import { ChateauFormComponent } from './page/chateau-form/chateau-form.component
     MatSelectModule,
     MatRadioModule,
     ReactiveFormsModule,
-    CarouselModule
+    CarouselModule,
+    GooglePlaceModule
   ],
 
   providers: [],
