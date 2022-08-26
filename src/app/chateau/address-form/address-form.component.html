@@ -2,76 +2,25 @@
 https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
 -->
 
-<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()" >
+<form >
   <mat-card class="Information-card">
     <mat-card-header>
       <mat-card-title>Chateau Information</mat-card-title>
     </mat-card-header>
-<mat-card-content>
-  <div class="row">
-    <div class="col">
-      <mat-form-field class="full-width">
-        <input matInput placeholder="Nom du chateau" formControlName="name">
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-  <mat-form-field class="full-width">
-    <input matInput
-           placeholder="Adresse"
-           id="searchAddress"
-           name="searchAddress"
-           required
-           autocomplete="off"
-    />
+    <mat-card-content>
+      <div class="row"> 
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput ngx-google-places-autocomplete (onAddressChange)="handleAddressChange($event)" />
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <button mat-raised-button color="primary" type="submit">Valider</button>
 
-  </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <mat-form-field class="full-width">
-    <input matInput placeholder="Complément d'adresse" id="address2" name="address2" />
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <mat-form-field class="full-width">
-    <input matInput placeholder="Ville" id="locality" formControlName="locality" required />
-      </mat-form-field>
-    </div>
-<div class="col">
-  <mat-form-field class="full-width">
-       <input matInput placeholder="Région" id="state" name="state" required />
-  </mat-form-field>
-</div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <mat-form-field class="full-width">
-    <input matInput #postcode maxlength="5" placeholder="Code Postal" id="postcode" name="postcode" required />
-        <mat-hint align="end">{{postcode.value.length}} / 5</mat-hint>
-     </mat-form-field>
-    </div>
-    <div class="col">
-      <mat-form-field class="full-width">
-    <input matInput placeholder="Pays" id="country" name="country" required />
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="col" >
-    <mat-form-field class="full-width">
-      <input matInput placeholder="lat" id="lat" name="lat" required />
-    </mat-form-field>
-  </div>
-</mat-card-content>
-  <button mat-raised-button color="primary" type="submit">Valider</button>
-
-  <!-- Reset button provided for development testing convenience.
+    <!-- Reset button provided for development testing convenience.
 Not recommended for user-facing forms due to risk of mis-click when aiming for Submit button. -->
-  <button mat-raised-button color="primary" type="reset" style="margin-left: 10rem" >Effacer</button>
+    <button mat-raised-button color="primary" type="reset" style="margin-left: 10rem">Effacer</button>
   </mat-card>
 </form>
 
@@ -83,10 +32,6 @@ Not recommended for user-facing forms due to risk of mis-click when aiming for S
 </div>
 
 <!-- Replace Powered By Google image src with self hosted image. https://developers.google.com/maps/documentation/places/web-service/policies#other_attribution_requirements -->
-<img
-  class="powered-by-google"
+<img class="powered-by-google"
   src="https://storage.googleapis.com/geo-devrel-public-buckets/powered_by_google_on_white.png"
-  alt="Powered by Google"
-/>
-
-
+  alt="Powered by Google" />
