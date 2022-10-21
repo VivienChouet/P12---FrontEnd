@@ -1,0 +1,42 @@
+<div *ngIf="chateau" class="row">
+  <div class="col s12 m8 offset-m2">
+    <mat-card>
+      <mat-card-header id="header">
+        <mat-card-title> {{ chateau.name}} </mat-card-title>
+      </mat-card-header>
+      <div class="carousel">
+        <app-carousel [chateau]="chateau_id"></app-carousel>
+      </div>
+      <div class="card-stacked">
+        <mat-card-content>
+          <mat-card-subtitle>
+            <h3>Adresse</h3>
+          </mat-card-subtitle>
+          <mat-card-content>
+            {{ chateau.numero_adresse }} {{ chateau.rue }} {{ chateau.ville }}
+          </mat-card-content>
+          <mat-card-subtitle>
+            <H3>Description</H3>
+          </mat-card-subtitle>
+          <mat-card-content>
+            {{ chateau.description }}
+          </mat-card-content>
+        </mat-card-content>
+        <div class="map">
+          <app-map [chateau]="chateau"></app-map>
+        </div>
+      </div>
+      <div class="row" id="commentaireForm">
+          <div class="col-8">
+            <app-commentaire-form> [chateau_id]="chateau_id" ></app-commentaire-form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="commentaire" id="commentaireDetail">
+          <app-commentaire-detail *ngFor="let commentaire of commentaires " [commentaire]="commentaire">
+          </app-commentaire-detail>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

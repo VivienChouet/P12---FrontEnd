@@ -1,0 +1,30 @@
+.mat-card{
+  height: 60rem;
+  width: 65rem;
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel{
+  height: 20rem;
+  width : 20rem;
+  display: flex;
+  justify-content: center;
+}
+
+.map{
+  height: 20rem;
+  width: 60rem;
+}
+
+.commentaireForm{
+  margin-top:10px;
+}
+
+.card-stacked{
+  display:  flex;
+  align-items: center;
+  justify-content: center;
+}
+

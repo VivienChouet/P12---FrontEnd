@@ -1,37 +1,36 @@
-<!-- Note: The address components in this sample are based on North American address format. You might need to adjust them for the locations relevant to your app. For more information, see
-https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete-addressform
--->
-
-<form >
+<form [formGroup]="addressForm"  (ngSubmit)="onSubmit()">
   <mat-card class="Information-card">
     <mat-card-header>
       <mat-card-title>Chateau Information</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div class="row"> 
+      <div class="row">
         <div class="col">
-          <mat-form-field class="full-width">
-            <input matInput ngx-google-places-autocomplete (onAddressChange)="handleAddressChange($event)" />
+          <mat-form-field class="full-width" >
+            <input matInput placeholder="Nom du chateau" formControlName="name"/>
           </mat-form-field>
         </div>
       </div>
     </mat-card-content>
-    <button mat-raised-button color="primary" type="submit">Valider</button>
-
-    <!-- Reset button provided for development testing convenience.
-Not recommended for user-facing forms due to risk of mis-click when aiming for Submit button. -->
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width" >
+            <input matInput placeholder="Adresse du chateau" ngx-google-places-autocomplete #places="ngx-places"
+            [options]="options"
+              (onAddressChange)="handleAddressChange($event)"/>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+    <button mat-raised-button color="primary" type="submit" style="margin-left : 5rem">Valider</button>
     <button mat-raised-button color="primary" type="reset" style="margin-left: 10rem">Effacer</button>
+  </mat-card-actions>
   </mat-card>
 </form>
+<mat-card class="Map-card" ng ng-controller="MapController" >
+<app-map [chateau]="chateau"></app-map>
+</mat-card>
 
 
-<div id="map"></div>
-<div id="infowindow-content">
-  <span id="place-name" class="title"></span><br />
-  <span id="place-address"></span>
-</div>
-
-<!-- Replace Powered By Google image src with self hosted image. https://developers.google.com/maps/documentation/places/web-service/policies#other_attribution_requirements -->
-<img class="powered-by-google"
-  src="https://storage.googleapis.com/geo-devrel-public-buckets/powered_by_google_on_white.png"
-  alt="Powered by Google" />

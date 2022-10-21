@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import { UploadService} from "../../services/upload.service";
 import {Slide} from "../../DTO/Slide";
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { NgbCarousel, NgbSlideEvent, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-carousel',
@@ -13,6 +14,12 @@ export class CarouselComponent implements OnInit {
   @Input() chateau! : number;
   slide! : Slide;
   slidestores! : Slide[] ;
+  paused = false;
+  unpauseOnArrow = false;
+  pauseOnIndicator = false;
+  pauseOnHover = false;
+  pauseOnFocus = true;
+
 
   currentSlide = 0;
 
@@ -25,21 +32,27 @@ export class CarouselComponent implements OnInit {
   getListFiles(){
     this.uploadService.getFilesByChateauId(this.chateau).subscribe(slidestores => {
       this.slidestores = slidestores,
-        console.log(slidestores);
+        console.log('slideStores : ',slidestores);
     })
   }
 
-  onPreviousClick() {
-    const previous = this.currentSlide - 1;
-    this.currentSlide = previous < 0 ? this.slidestores.length - 1 : previous;
-    console.log("previous clicked, new current slide is: ", this.currentSlide);
+  @ViewChild('carousel', {static : true}) carousel!: NgbCarousel;
+
+  togglePaused() {
+    this.paused = !this.paused;
   }
 
-  onNextClick() {
-    const next = this.currentSlide + 1;
-    this.currentSlide = next === this.slidestores.length ? 0 : next;
-    console.log("next clicked, new current slide is: ", this.currentSlide);
+  onSlide(slideEvent: NgbSlideEvent) {
+    if (this.unpauseOnArrow && slideEvent.paused &&
+      (slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)) {
+      this.togglePaused();
+    }
+    if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
+      this.togglePaused();
+    }
   }
+
+
 
 }
 

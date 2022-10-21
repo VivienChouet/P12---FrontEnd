@@ -1,15 +1,15 @@
+import { LatLng } from "ngx-google-places-autocomplete/objects/latLng";
 import { User } from "./User";
 
 export interface Chateau {
 
   id : number;
-  name : String;
-  numero_adresse : Number;
-  searchAddress : String;
-  locality : string;
-  code_postal : Number;
-  lattitude : number;
-  longitude : number;
-  description : String;
+  name : string;
+  numero_adresse : number ;
+  rue : string ;
+  ville : string ;
+  code_postal : number ;
+  localisation : LatLng ;
+  description : string;
   responsable : User;
 }

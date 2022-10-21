@@ -1,17 +1,11 @@
-<body>
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <span>Web Project 12</span>
-    </mat-toolbar>
-    <app-address-form></app-address-form>
-  </mat-sidenav-content>
-</mat-sidenav-container>
-</body>
+<div class="app">
+  <div class="app-header">
+    <app-header></app-header>
+  </div>
+  <div class="router-outlet">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+
+

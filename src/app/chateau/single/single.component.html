@@ -1,0 +1,14 @@
+  <mat-card (click)="goToChateau()" appBorderCard>
+    <mat-card-header>
+      <h1>{{ chateau.name}}</h1>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+       {{chateau.numero_adresse}} {{chateau.rue}} {{chateau.ville}}
+      </p>
+      <div class="carousel">
+        <app-carousel [chateau]="chateau.id"></app-carousel>
+      </div>
+    </mat-card-content>
+  </mat-card>
+

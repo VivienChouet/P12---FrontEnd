@@ -1,16 +1,20 @@
-<div class="container" [hidden]="unauthorized">
-  <div class="row">
-    <form [formGroup]="commentaireForm" (ngSubmit)="onSubmit()">
-      <div class="card-header">
-        <p>Ajouter un commentaire</p>
-      </div>
-      <div class="card-body">
-        <div class="form-group">
-          <label for="commentaire">Commentaire</label>
-          <input type="text" class="form-control" id="commentaire" formControlName="commentaire" />
+<form [formGroup]="commentaireForm" (ngSubmit)="onSubmit()">
+  <mat-card class="Information-card">
+    <mat-card-header>
+      <mat-card-title>Nouveau commentaire</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="votre commentaire " formControlName="commentaire" />
+          </mat-form-field>
         </div>
       </div>
-      <button type="submit" class="btn btn-success">Poster un commentaire</button>
-    </form>
-  </div>
-</div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" style="margin-left : 5rem">Valider</button>
+      <button mat-raised-button color="primary" type="reset" style="margin-left: 10rem">Effacer</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

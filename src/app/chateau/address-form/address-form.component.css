@@ -26,6 +26,8 @@
   margin-right: 0;
 }
 
-#map {
-  height: 50%;
+.Map-card{
+  width: 90%;
+  height: 25rem;
+  margin: auto;
 }

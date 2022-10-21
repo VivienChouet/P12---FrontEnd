@@ -1,1 +1,30 @@
-<p>login works!</p>
+<div class="container">
+  <div class="row">
+    <mat-card>
+    <div [hidden]="submitted">
+      <mat-card-header>
+      <h1>Login</h1>
+    </mat-card-header>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your email</mat-label>
+          <input matInput placeholder="pat@example.com"  formControlName="email" required />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'"  formControlName="password" required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <div class="raw">
+          <button mat-raised-button color="primary" type="submit" style="margin-left: 5rem">
+            Login
+          </button>
+        </div>
+      </form>
+    </div>
+  </mat-card>
+  </div>
+</div>

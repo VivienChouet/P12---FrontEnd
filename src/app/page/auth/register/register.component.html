@@ -1,1 +1,43 @@
-<p>register works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <mat-card class="Information-card">
+    <mat-card-header>
+      <mat-card-title>Nouvel utilisateur</mat-card-title>
+    </mat-card-header>
+    <div class="row">
+      <div class="container">
+        <mat-form-field appearance="fill">
+          <mat-label>Nom</mat-label>
+          <input matInput placeholder="Dupont" formControlName="firstName" required />
+        </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>prénom</mat-label>
+            <input matInput placeholder="Jean" formControlName="lastName" required />
+          </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="container">
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your email</mat-label>
+          <input matInput placeholder="pat@example.com" formControlName="email" required />
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Enter your password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" style="margin-left: 5rem">
+        Valider
+      </button>
+      <button mat-raised-button color="primary" type="reset" style="margin-left: 10rem">
+        Effacer
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

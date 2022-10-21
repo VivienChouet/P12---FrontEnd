@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import { Chateau} from "src/app/DTO/Chateau";
 import {Observable} from "rxjs";
 
@@ -10,25 +10,41 @@ export class ChateauService {
 
   constructor(private http: HttpClient) { }
 
-  addChateau(chateau : Chateau){
-    console.log("état des données : " + chateau.locality)
+  addChateau(chateau : Chateau , name : string){
+    console.log("état des données : " + chateau.ville)
     return this.http.post(
-      "http://localhost:8080/chateau/",
+      'api/chateau/',
       {
-        "name" : chateau.name,
+        "name" : name,
         "numero_adresse" : chateau.numero_adresse,
         "code_postal" : chateau.code_postal,
-        "adresse" : chateau.searchAddress ,
-      }
-    )
+        "rue" : chateau.rue ,
+        "ville" : chateau.ville,
+        "localisation" : chateau.localisation.toString,
+      })
   }
 
   listChateau() : Observable<Chateau[]>{
-    return this.http.get<Chateau[]>("http://localhost:8080/chateau/")
+    return this.http.get<Chateau[]>('http://localhost:8080/chateau/')
   }
 
   getChateauId(chateau_id : number) : Observable<Chateau>{
-    return this.http.get<Chateau>("http://localhost:8080/chateau/" + chateau_id)
+    return this.http.get<Chateau>('http://localhost:8080/chateau/' + chateau_id)
+  }
+
+  getListNameChateaux() : Observable<string[]> {
+   return this.http.get<string[]>('http://localhost:8080/chateau/list/name')
+  }
+
+  listMyChateau(): Observable<Chateau[]>{
+    const token = localStorage.getItem("id_token")
+    console.log("token = " + token)
+    const options = {
+      headers: new HttpHeaders({
+        Authorization: token ? token : ""
+      })
+    }
+    return this.http.get<Chateau[]>('http://localhost:8080/chateau/mychateau', options)
   }
 
 }

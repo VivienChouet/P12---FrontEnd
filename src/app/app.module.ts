@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
@@ -9,12 +9,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import  {MatSliderModule} from "@angular/material/slider";
+import { MatSliderModule } from "@angular/material/slider";
 import { HomeComponent } from './page/home/home.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
-import { ChateauSingleComponent } from './page/chateau-single/chateau-single.component';
+import { ChateauDetailComponent } from './page/chateau-detail/chateau-detail.component';
 import { ChateauListComponent } from './page/chateau-list/chateau-list.component';
 import { ChateauNewComponent } from './page/chateau-new/chateau-new.component';
 import { AddressFormComponent } from './chateau/address-form/address-form.component';
@@ -32,15 +32,29 @@ import { MapComponent } from './utility/map/map.component';
 import { CommentaireFormComponent } from './commentaire/commentaire-form/commentaire-form.component';
 import { DetailComponent } from './commentaire/commentaire-detail/detail.component';
 import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
-import { CarouselModule } from 'ngx-owl-carousel-o'; 
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { CarouselModule } from 'ngx-owl-carousel-o';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { HeaderComponent } from './page/header/header.component';
+import { ChateauUpdateComponent } from './page/chateau-update/chateau-update.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { CustomErrorHandler } from './services/custom-error-handler.service';
+import { GlobalHttpErrorHandlerService } from './services/global-http-error-handler.service';
+import { SingleComponent } from './chateau/single/single.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { SearchAutocompleteComponent } from './utility/search-autocomplete/search-autocomplete.component';
+import { BorderCardDirective } from './directive/border-card.directive';
+import { SidenavComponent } from './page/sidenav/sidenav.component';
+import { SidenaveeComponent } from './sidenavee/sidenavee.component';
+import { MychateauComponent } from './page/mychateau/mychateau.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ChateauSingleComponent,
+    ChateauDetailComponent,
     ChateauListComponent,
     ChateauNewComponent,
     AddressFormComponent,
@@ -52,8 +66,15 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
     RegisterComponent,
     MapComponent,
     CommentaireFormComponent,
-    DetailComponent
-
+    DetailComponent,
+    HeaderComponent,
+    ChateauUpdateComponent,
+    SingleComponent,
+    SearchAutocompleteComponent,
+    BorderCardDirective,
+    SidenavComponent,
+    SidenaveeComponent,
+    MychateauComponent,
   ],
 
   imports: [
@@ -77,10 +98,23 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
     MatRadioModule,
     ReactiveFormsModule,
     CarouselModule,
-    GooglePlaceModule
+    MatSnackBarModule,
+    GooglePlaceModule,
+    NgbModule,
+    MatAutocompleteModule
   ],
 
-  providers: [],
+  providers: [
+    {
+      provide : ErrorHandler,
+      useClass : CustomErrorHandler
+    },
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass : GlobalHttpErrorHandlerService,
+      multi : true
+    }
+  ],
 
   exports: [
     HomeComponent,

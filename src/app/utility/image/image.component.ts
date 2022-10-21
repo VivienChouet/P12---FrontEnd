@@ -13,18 +13,17 @@ export class ImageComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer ) {}
 
   @Input() slide! : Slide;
-  @Input() size! : any;
+
   image : any;
 
   ngOnInit(): void {
     this.getImage();
-    this.size = 200,200;
+    console.log('image : ' , this.slide)
   }
 
   getImage(){
     const objectURL = 'data:image/jpeg;base64,' + this.slide.data;
     this.image = this.sanitizer.bypassSecurityTrustUrl(objectURL)
+    console.log('image appelé : ', this.image)
   }
-
-
 }

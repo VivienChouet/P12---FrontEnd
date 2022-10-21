@@ -46,7 +46,6 @@ export class UploadComponent implements OnInit {
               this.message = event.body.message;
               this.fileInfos = this.utilityService.getFilesByChateauId(this.chateau_id);
             }
-
           },
           error: (err: any) => {
             console.log(err);

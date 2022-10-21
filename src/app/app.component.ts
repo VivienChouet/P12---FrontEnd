@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
-import {Observable} from "rxjs";
+import { Component, OnInit } from '@angular/core';
+import {fromEvent, Observable} from "rxjs";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
-import {map, shareReplay} from "rxjs/operators";
+import {debounceTime, distinctUntilChanged, map, shareReplay, startWith, tap} from "rxjs/operators";
+import { Width } from 'ngx-owl-carousel-o/lib/services/carousel.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'WebProject12';
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -18,4 +19,18 @@ export class AppComponent {
     );
 
   constructor(private breakpointObserver: BreakpointObserver) {}
-}
+
+  ngOnInit(): void {
+    fromEvent(window, 'resize')
+    .pipe(
+      debounceTime(200),
+      map(() => window.innerWidth),
+      distinctUntilChanged(),
+      startWith(window.innerWidth),
+    )
+    .subscribe(width => console.log(width));
+  }
+
+ }
+
+
