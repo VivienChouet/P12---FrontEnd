@@ -21,7 +21,7 @@ export class CommentaireService {
     }
     console.log("envoi du commentaire : " + commentaire + "ayant pour id chateau : " + id_chateau)
     return this.http.post(
-      "http://localhost:8080/commentaire/",
+      'api/commentaire/',
       {
         "commentaire": commentaire,
         "id_chateau": id_chateau,
@@ -32,11 +32,11 @@ export class CommentaireService {
   getListCommentaireByChateau_id(chateau_id : number) : Observable<Commentaire[]> {
     console.log("chateau id = " + chateau_id)
     return this.http.get<Commentaire[]>(
-      "http://localhost:8080/commentaire/chateau/"+chateau_id
+      'hapi/commentaire/chateau/'+chateau_id
     )
   }
 
   deleteCommentaire(id: number) {
-    return this.http.delete("http://localhost:8080/commentaire/" + id)
+    return this.http.delete('api/commentaire/' + id)
   }
 }

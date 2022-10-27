@@ -1,11 +1,40 @@
-<p>chateau-update works!</p>
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+  <mat-card class="Information-card">
+    <mat-card-header>
+      <mat-card-title>Chateau Information</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="{{chateau.name}}" formControlName="name" />
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="{{chateau.numero_adresse}} {{chateau.rue}} {{chateau.ville}}"
+              ngx-google-places-autocomplete #places="ngx-places" [options]="options"
+              (onAddressChange)="handleAddressChange($event)" />
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" style="margin-left : 5rem">Valider</button>
+      <button mat-raised-button color="primary" type="reset" style="margin-left: 10rem">Effacer</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+<mat-card class="Map-card" ng ng-controller="MapController">
+  <app-map [chateau]="chateau"></app-map>
+</mat-card>
 <mat-card>
   <mat-card-header>
-
+    <mat-card-title>Ajout d'une photo</mat-card-title>
   </mat-card-header>
-    <mat-card-subtitle>
-      <a> Adresse </a>
-    </mat-card-subtitle>
-
-
+  <app-upload></app-upload>
 </mat-card>

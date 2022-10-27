@@ -1,7 +1,6 @@
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Observer, Subscriber, Subscription } from 'rxjs';
-import { subscriptionLogsToBeFn } from 'rxjs/internal/testing/TestScheduler';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +9,7 @@ export class UtilityService {
 
   constructor(private http : HttpClient) { }
 
-  private baseUrl = 'http://localhost:8080/files';
+  private baseUrl = 'api/files';
 
   upload(file: File, chateau_id : number): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();

@@ -2,12 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Chateau } from '../../DTO/Chateau';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
-import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
-import { ComponentRestrictions } from 'ngx-google-places-autocomplete/objects/options/componentRestrictions';
 import { ChateauService } from 'src/app/services/chateau.service';
 import { FormBuilder, UntypedFormGroup } from '@angular/forms';
 import { User } from 'src/app/DTO/User';
-import { LatLng } from 'ngx-google-places-autocomplete/objects/latLng';
 
 @Component({
   selector: 'app-address-form',
@@ -38,13 +35,14 @@ export class AddressFormComponent implements OnInit {
 
   handleAddressChange(address: Address) {
     console.log(address);
-    this.saveChateau(address);
+    this.chateau = this.saveChateau(address);
   }
 
   onSubmit() {
+    console.log("chateau submitted = " + this.chateau.name)
     this.chateauService
     .addChateau(this.chateau, this.addressForm.value.name)
-    .subscribe((s) => console.log(s));
+    .subscribe((s) => console.log("chateau submitted : " + s));
   }
 
   public saveChateau(address: Address) {
@@ -81,9 +79,11 @@ export class AddressFormComponent implements OnInit {
 
     chateau.localisation = address.geometry.location;
 
-    this.chateau = chateau;
+    this.chateau = {
+      ...chateau,
+    };
     this.chateaux[0] = this.chateau;
-    console.log(this.chateau);
+    console.log("chateau ville  = " + this.chateau.ville);
     return this.chateau;
   }
 }

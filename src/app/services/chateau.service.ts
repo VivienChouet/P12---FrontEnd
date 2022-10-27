@@ -24,16 +24,31 @@ export class ChateauService {
       })
   }
 
+  upDateChateau(chateau : Chateau , name : string){
+    console.log("état des données : " + chateau.ville)
+    console.log(" chateau id = " + chateau.id)
+    return this.http.post(
+      'api/chateau/update/' + chateau.id,
+      {
+        "name" : name,
+        "numero_adresse" : chateau.numero_adresse,
+        "code_postal" : chateau.code_postal,
+        "rue" : chateau.rue ,
+        "ville" : chateau.ville,
+        "localisation" : chateau.localisation.toString,
+      })
+  }
+
   listChateau() : Observable<Chateau[]>{
-    return this.http.get<Chateau[]>('http://localhost:8080/chateau/')
+    return this.http.get<Chateau[]>('api/chateau/')
   }
 
   getChateauId(chateau_id : number) : Observable<Chateau>{
-    return this.http.get<Chateau>('http://localhost:8080/chateau/' + chateau_id)
+    return this.http.get<Chateau>('api/chateau/' + chateau_id)
   }
 
   getListNameChateaux() : Observable<string[]> {
-   return this.http.get<string[]>('http://localhost:8080/chateau/list/name')
+   return this.http.get<string[]>('api/chateau/list/name')
   }
 
   listMyChateau(): Observable<Chateau[]>{
@@ -44,7 +59,7 @@ export class ChateauService {
         Authorization: token ? token : ""
       })
     }
-    return this.http.get<Chateau[]>('http://localhost:8080/chateau/mychateau', options)
+    return this.http.get<Chateau[]>('api/chateau/mychateau', options)
   }
 
 }

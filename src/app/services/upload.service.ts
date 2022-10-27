@@ -9,7 +9,7 @@ export class UploadService {
 
   constructor(private http : HttpClient) { }
 
-  private baseUrl = 'http://localhost:8080/files';
+  private baseUrl = 'api/files';
 
   upload(file: File, chateau_id : number): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
