@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError, timeout } from 'rxjs';
+import { Chateau } from 'src/app/DTO/Chateau';
 import { User } from 'src/app/DTO/User';
 
 @Injectable({
@@ -21,14 +22,17 @@ export class AuthService {
         Authorization: token ? token : '',
       }),
     };
-    console.log('toke : ' + token);
+    console.log('token : ' + token);
     return options;
   }
 
   login(email: string, password: string) {
-    return this.http.post<User>('http://localhost:8080/user/login', {
+    return this.http.post<User>('api/user/login', {
       email,
       password,
+    }).subscribe(user1 => {
+      this.user = user1;
+      this.setSession(20000,this.user.token)
     });
   }
 
@@ -39,12 +43,12 @@ export class AuthService {
   }
 
   addUser(
-    firstName: String,
+    firstName: string,
     lastName: string,
     email: string,
     password: string
   ) {
-    return this.http.post('http://localhost:8080/user/', {
+    return this.http.post('api/user/', {
       firstName: firstName,
       lastName: lastName,
       email: email,
@@ -61,7 +65,7 @@ export class AuthService {
     const options = this.SetTokenHeader();
     if (options) {
       return this.http.get<boolean>(
-        'http://localhost:8080/user/verify/auth',
+        'api/user/verify/auth',
         options
       );
     }
@@ -72,10 +76,31 @@ export class AuthService {
     const options = this.SetTokenHeader();
     if (options) {
       return this.http.get<boolean>(
-        'http://localhost:8080/user/verify/admin',
+        'api/user/verify/admin',
         options
       );
     }
     return of(false);
+  }
+
+
+  isAuthor(user : User , chateau : Chateau): boolean {
+  if(user.id === chateau.responsable.id){
+    return true;
+  }
+  return false;
+  }
+
+  isAuthorGuard(chateau : Chateau): Observable<boolean> {
+    const options = this.SetTokenHeader();
+
+    if(options){
+      return this.http.post<boolean>('api/user/verify/author',
+      {
+        "chateau_id": chateau.id
+      }
+      ,options);
+    }
+    return of (false)
   }
 }

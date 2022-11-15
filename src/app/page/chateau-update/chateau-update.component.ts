@@ -85,7 +85,14 @@ export class ChateauUpdateComponent implements OnInit {
         chateau.code_postal = +codePostal;
       }
 
-      chateau.localisation = address.geometry.location;
+      const lat = address.geometry.location.lat();
+      if(lat){
+        chateau.lat = lat
+      }
+
+        const lng = address.geometry.location.lng()
+        if(lng){
+          chateau.lng  = lng  }
 
       this.chateau = chateau;
       this.chateaux[0] = this.chateau;

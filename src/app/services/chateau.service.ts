@@ -10,23 +10,34 @@ export class ChateauService {
 
   constructor(private http: HttpClient) { }
 
+  SetTokenHeader() {
+    const token = localStorage.getItem('id_token');
+    const options = {
+      headers: new HttpHeaders({
+        Authorization: token ? token : '',
+      }),
+    };
+    console.log('token : ' + token);
+    return options;
+  }
+
+
   addChateau(chateau : Chateau , name : string){
-    console.log("état des données : " + chateau.ville)
+    console.log("chateau test : " + chateau)
     return this.http.post(
       'api/chateau/',
       {
         "name" : name,
-        "numero_adresse" : chateau.numero_adresse,
-        "code_postal" : chateau.code_postal,
-        "rue" : chateau.rue ,
+        "numeroAdresse" : chateau.numero_adresse,
+        "codePostal" : chateau.code_postal,
+        "adresse" : chateau.rue ,
         "ville" : chateau.ville,
-        "localisation" : chateau.localisation.toString,
-      })
+        "lat" : chateau.lat,
+        "lng" : chateau.lng
+      },this.SetTokenHeader())
   }
 
   upDateChateau(chateau : Chateau , name : string){
-    console.log("état des données : " + chateau.ville)
-    console.log(" chateau id = " + chateau.id)
     return this.http.post(
       'api/chateau/update/' + chateau.id,
       {
@@ -35,8 +46,9 @@ export class ChateauService {
         "code_postal" : chateau.code_postal,
         "rue" : chateau.rue ,
         "ville" : chateau.ville,
-        "localisation" : chateau.localisation.toString,
-      })
+        "lat" : chateau.lat,
+        "lng" : chateau.lng
+      },this.SetTokenHeader())
   }
 
   listChateau() : Observable<Chateau[]>{
@@ -52,14 +64,7 @@ export class ChateauService {
   }
 
   listMyChateau(): Observable<Chateau[]>{
-    const token = localStorage.getItem("id_token")
-    console.log("token = " + token)
-    const options = {
-      headers: new HttpHeaders({
-        Authorization: token ? token : ""
-      })
-    }
-    return this.http.get<Chateau[]>('api/chateau/mychateau', options)
+    return this.http.get<Chateau[]>('api/chateau/mychateau',this.SetTokenHeader())
   }
 
 }

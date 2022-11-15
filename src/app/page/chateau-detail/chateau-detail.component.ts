@@ -29,6 +29,7 @@ export class ChateauDetailComponent implements OnInit {
   ngOnInit(): void {
     this.getCommentaires();
     this.getChateau();
+    console.log("chateau id detail = " + this.chateau_id)
   }
 
   getCommentaires(): void {

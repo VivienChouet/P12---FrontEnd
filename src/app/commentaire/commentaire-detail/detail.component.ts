@@ -27,6 +27,7 @@ export class DetailComponent implements OnInit {
     this.deleteForm = this.formBuilder.group({})
     console.log("liste des commentaire = " + this.commentaire.id)
     console.log("liste des commentaire = " + this.commentaire.user.firstName)
+
   }
 
   onSubmit(){

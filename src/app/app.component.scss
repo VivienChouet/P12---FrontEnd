@@ -10,5 +10,9 @@
 
 .router-outlet{
   margin-top: 1rem;
-  margin-left: 250px;
+  margin-left: 1rem;
+  @media only screen and (min-width: 600px){
+    margin-left: 250px;
+  }
+
 }

@@ -34,12 +34,12 @@ export class AddressFormComponent implements OnInit {
   }
 
   handleAddressChange(address: Address) {
-    console.log(address);
+    console.log("Adresse L37" + address);
     this.chateau = this.saveChateau(address);
   }
 
   onSubmit() {
-    console.log("chateau submitted = " + this.chateau.name)
+    console.log("Chateau on submit " + this.chateau)
     this.chateauService
     .addChateau(this.chateau, this.addressForm.value.name)
     .subscribe((s) => console.log("chateau submitted : " + s));
@@ -77,13 +77,13 @@ export class AddressFormComponent implements OnInit {
       chateau.code_postal = +codePostal;
     }
 
-    chateau.localisation = address.geometry.location;
+    chateau.lat = address.geometry.location.lat();
 
-    this.chateau = {
-      ...chateau,
-    };
-    this.chateaux[0] = this.chateau;
-    console.log("chateau ville  = " + this.chateau.ville);
-    return this.chateau;
+    chateau.lng  = address.geometry.location.lng()
+
+     this.chateaux[0] = this.chateau;
+
+     console.log(chateau)
+    return chateau;
   }
 }

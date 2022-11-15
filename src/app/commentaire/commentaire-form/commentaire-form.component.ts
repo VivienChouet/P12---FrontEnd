@@ -12,7 +12,7 @@ import {Commentaire} from "../../DTO/Commentaire";
 })
 export class CommentaireFormComponent implements OnInit {
 
-  @Input() chateau_id!: number;
+  @Input() chateau_id!: any;
   commentaires : Commentaire [] = [];
 
   constructor(private formBuilder: UntypedFormBuilder, private commentaireService: CommentaireService, private authService : AuthService) { }
@@ -26,6 +26,7 @@ export class CommentaireFormComponent implements OnInit {
     this.commentaireForm = this.formBuilder.group({
       commentaire: [null],
     })
+   console.log("id chateau = " + this.chateau_id)
   }
 
   submitted = false

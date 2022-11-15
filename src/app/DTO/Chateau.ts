@@ -9,7 +9,9 @@ export interface Chateau {
   rue : string ;
   ville : string ;
   code_postal : number ;
-  localisation : LatLng ;
+  lat : number;
+  lng : number
+  localisation : string ;
   description : string;
   responsable : User;
 }

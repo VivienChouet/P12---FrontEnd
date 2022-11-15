@@ -22,13 +22,15 @@
             {{ chateau.description }}
           </mat-card-content>
         </mat-card-content>
-        <div class="map">
-          <app-map [chateau]="chateau"></app-map>
         </div>
-      </div>
+          <div class="map">
+            <app-map [chateau]="chateau"></app-map>
+          </div>
+
       <div class="row" id="commentaireForm">
           <div class="col-8">
-            <app-commentaire-form> [chateau_id]="chateau_id" ></app-commentaire-form>
+            {{chateau_id}}
+            <app-commentaire-form [chateau_id]="chateau_id"></app-commentaire-form>
         </div>
       </div>
       <div class="row">
@@ -37,9 +39,6 @@
           </app-commentaire-detail>
         </div>
       </div>
-    </mat-card>
-    <mat-card >
-
     </mat-card>
   </div>
 </div>

@@ -32,11 +32,11 @@ export class CommentaireService {
   getListCommentaireByChateau_id(chateau_id : number) : Observable<Commentaire[]> {
     console.log("chateau id = " + chateau_id)
     return this.http.get<Commentaire[]>(
-      'hapi/commentaire/chateau/'+chateau_id
+      'api/commentaire/chateau/'+chateau_id
     )
   }
 
   deleteCommentaire(id: number) {
-    return this.http.delete('api/commentaire/' + id)
+    return this.http.delete('api/commentaire/chateau/' + id)
   }
 }

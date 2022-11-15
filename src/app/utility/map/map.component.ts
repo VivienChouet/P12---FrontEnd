@@ -24,13 +24,13 @@ export class MapComponent implements OnChanges {
 
   public newLocation(chateau : Chateau){
     if(chateau){
-    this.lat = chateau.localisation.lat();
-    this.lng = chateau.localisation.lng();
+    this.lat = chateau.lat;
+    this.lng = chateau.lng;
     this.zoom = 12;
-    }
     this.getMap();
+    console.log("lat / lng " + this.lat + " , " + this.lng)
   }
-
+  }
 
     public getMap(): void {
       const map = new google.maps.Map(
@@ -41,10 +41,11 @@ export class MapComponent implements OnChanges {
           mapTypeControl: false,
         }
       );
+
       const marker = new google.maps.Marker({
         map,
       });
-      marker.setPosition(this.chateau.localisation)
+      marker.setPosition(new google.maps.LatLng(this.lat, this.lng) )
   }
 
 
