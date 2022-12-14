@@ -29,7 +29,6 @@
 
       <div class="row" id="commentaireForm">
           <div class="col-8">
-            {{chateau_id}}
             <app-commentaire-form [chateau_id]="chateau_id"></app-commentaire-form>
         </div>
       </div>
@@ -38,6 +37,11 @@
           <app-commentaire-detail *ngFor="let commentaire of commentaires " [commentaire]="commentaire">
           </app-commentaire-detail>
         </div>
+      </div>
+      <div class="isAuthor" *ngIf="isAuthor">
+        <mat-card-actions>
+          <button mat-raised-button color="primary" style="margin-left : 5rem" routerLinkActive="active" routerLink="/chateaux/update/{{chateau.id}}">Modifier</button>
+        </mat-card-actions>
       </div>
     </mat-card>
   </div>

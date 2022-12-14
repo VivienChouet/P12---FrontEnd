@@ -33,12 +33,14 @@ export class ChateauUpdateComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-      this.chateauService.getChateauId(+this.route.snapshot.paramMap.get('id')!).subscribe(s=>{
+      this.chateau_id = +this.route.snapshot.paramMap.get('id')!
+      this.chateauService.getChateauId(this.chateau_id).subscribe(s=>{
       this.chateau = s,
       console.log(s)
       } )
       this.addressForm = this.formBuilder.group({
         name: [null],
+        description: [null]
       });
     }
 
@@ -49,7 +51,7 @@ export class ChateauUpdateComponent implements OnInit {
 
     onSubmit() {
       this.chateauService
-      .upDateChateau(this.chateau, this.addressForm.value.name)
+      .upDateChateau(this.chateau_id,this.chateau, this.addressForm.value.name, this.addressForm.value.description)
       .subscribe((s) => console.log(s));
     }
 

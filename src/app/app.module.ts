@@ -25,7 +25,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CarouselComponent } from './utility/carousel/carousel.component';
 import { ImageComponent } from './utility/image/image.component';
 import { UploadComponent } from './utility/upload/upload.component';
-import { RatingComponent } from './utility/rating/rating.component';
 import { LoginComponent } from './page/auth/login/login.component';
 import { RegisterComponent } from './page/auth/register/register.component';
 import { MapComponent } from './utility/map/map.component';
@@ -38,7 +37,6 @@ import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { HeaderComponent } from './page/header/header.component';
 import { ChateauUpdateComponent } from './page/chateau-update/chateau-update.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar'
-import { CustomErrorHandler } from './services/custom-error-handler.service';
 import { GlobalHttpErrorHandlerService } from './services/global-http-error-handler.service';
 import { SingleComponent } from './chateau/single/single.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -48,6 +46,7 @@ import { BorderCardDirective } from './directive/border-card.directive';
 import { SidenavComponent } from './page/sidenav/sidenav.component';
 import { SidenaveeComponent } from './sidenavee/sidenavee.component';
 import { MychateauComponent } from './page/mychateau/mychateau.component';
+import { StarRatingModule } from 'angular-star-rating';
 
 
 @NgModule({
@@ -61,7 +60,6 @@ import { MychateauComponent } from './page/mychateau/mychateau.component';
     CarouselComponent,
     ImageComponent,
     UploadComponent,
-    RatingComponent,
     LoginComponent,
     RegisterComponent,
     MapComponent,
@@ -101,13 +99,13 @@ import { MychateauComponent } from './page/mychateau/mychateau.component';
     MatSnackBarModule,
     GooglePlaceModule,
     NgbModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    StarRatingModule.forRoot()
   ],
 
   providers: [
     {
       provide : ErrorHandler,
-      useClass : CustomErrorHandler
     },
     {
       provide : HTTP_INTERCEPTORS,

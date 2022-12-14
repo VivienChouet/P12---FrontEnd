@@ -26,7 +26,6 @@ export class CommentaireFormComponent implements OnInit {
     this.commentaireForm = this.formBuilder.group({
       commentaire: [null],
     })
-   console.log("id chateau = " + this.chateau_id)
   }
 
   submitted = false

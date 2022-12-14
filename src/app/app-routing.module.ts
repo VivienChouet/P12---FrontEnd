@@ -10,6 +10,8 @@ import { MychateauComponent } from './page/mychateau/mychateau.component';
 import { ChateauUpdateComponent } from './page/chateau-update/chateau-update.component';
 import { AuthGuard } from './guard/auth.guard';
 import { AdminGuard } from './guard/admin.guard';
+import { AuthorGuard } from './guard/author.guard';
+
 
 
 const routes: Routes = [
@@ -18,9 +20,9 @@ const routes: Routes = [
   { path: 'auth/register', component: RegisterComponent },
   { path: 'chateaux', component: ChateauListComponent },
   { path: 'chateaux/detail/:id', component: ChateauDetailComponent,},
-  { path: 'chateaux/update/:id', component: ChateauUpdateComponent},
-  { path : 'chateaux/create',component: ChateauNewComponent},
-  { path : 'chateaux/mychateau', component: MychateauComponent}
+  { path: 'chateaux/update/:id', component: ChateauUpdateComponent, canActivate: [AuthorGuard]},
+  { path: 'chateaux/create',component: ChateauNewComponent, canActivate : [AuthGuard]},
+  { path: 'chateaux/mychateau', component: MychateauComponent, canActivate : [AuthGuard]}
 
 ];
 

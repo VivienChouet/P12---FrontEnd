@@ -30,19 +30,19 @@ export class AddressFormComponent implements OnInit {
   ngOnInit(): void {
     this.addressForm = this.formBuilder.group({
       name: [null],
+      description : [null],
     });
   }
 
   handleAddressChange(address: Address) {
-    console.log("Adresse L37" + address);
-    this.chateau = this.saveChateau(address);
+    console.log(address);
+    this.saveChateau(address);
   }
 
   onSubmit() {
-    console.log("Chateau on submit " + this.chateau)
     this.chateauService
-    .addChateau(this.chateau, this.addressForm.value.name)
-    .subscribe((s) => console.log("chateau submitted : " + s));
+    .addChateau(this.chateau, this.addressForm.value.name, this.addressForm.value.description)
+    .subscribe((s) => console.log(s));
   }
 
   public saveChateau(address: Address) {
@@ -77,13 +77,18 @@ export class AddressFormComponent implements OnInit {
       chateau.code_postal = +codePostal;
     }
 
-    chateau.lat = address.geometry.location.lat();
+    const lat = address.geometry.location.lat();
+    if(lat){
+      chateau.lat = lat
+    }
 
-    chateau.lng  = address.geometry.location.lng()
+      const lng = address.geometry.location.lng()
+      if(lng){
+        chateau.lng  = lng  }
 
-     this.chateaux[0] = this.chateau;
-
-     console.log(chateau)
-    return chateau;
+    this.chateau = chateau;
+    this.chateaux[0] = this.chateau;
+    console.log("chateau update =  " + this.chateau);
+    return this.chateau;
   }
 }

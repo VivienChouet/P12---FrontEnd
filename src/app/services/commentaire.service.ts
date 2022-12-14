@@ -37,6 +37,13 @@ export class CommentaireService {
   }
 
   deleteCommentaire(id: number) {
-    return this.http.delete('api/commentaire/chateau/' + id)
+    const token = localStorage.getItem("id_token")
+    console.log("token = " + token)
+    const options = {
+      headers: new HttpHeaders({
+        Authorization: token ? token : ""
+      })
+    }
+    return this.http.delete('api/commentaire/chateau/' + id,options)
   }
 }

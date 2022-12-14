@@ -13,25 +13,27 @@
   </div>
 </div>
 <div *ngIf="currentFile" class="progress my-3">
-  <div
-    class="progress-bar progress-bar-info progress-bar-striped"
-    role="progressbar"
-    attr.aria-valuenow="{{ progress }}"
-    aria-valuemin="0"
-    aria-valuemax="100"
-  >
+  <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+    attr.aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100">
     {{ progress }}%
   </div>
 </div>
 <div *ngIf="message" class="alert alert-secondary" role="alert">{{ message }}</div>
 <div class="card mt-3">
-  <div class="card-header">List of Slide</div>
-  <ul
-    class="list-group list-group-flush"
-    *ngFor="let file of fileInfos | async"
-  >
+  <div class="list">
+  <div class="card-header">Liste des images</div>
+  <ul class="list-group list-group-flush" *ngFor="let file of fileInfos | async">
     <li class="list-group-item">
-      <a href="{{ file.url }}">{{ file.name }}</a>
+      <a href="{{ file.url }}">{{ file.name }} {{file.id}}</a>
+      <div class="image">
+      <app-image [slide]="file"></app-image>
+      </div>
+      <form [formGroup]="deleteForm" (ngSubmit)="onSubmit(file.id)">
+        <button color="primary" type="submit" class="mat-focus-indicator mat-raised-button mat-button-base mat-primary" style="height:1.5rem ; width: 2rem;">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </form>
     </li>
   </ul>
+</div>
 </div>

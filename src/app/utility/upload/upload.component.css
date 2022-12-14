@@ -1,0 +1,12 @@
+.list {
+  background-color:  #303030;
+}
+
+.list-group-item{
+  background-color: #424242;
+}
+
+.image {
+  height: 5rem;
+  width: 5rem;
+}

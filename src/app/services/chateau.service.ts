@@ -22,12 +22,13 @@ export class ChateauService {
   }
 
 
-  addChateau(chateau : Chateau , name : string){
-    console.log("chateau test : " + chateau)
+  addChateau(chateau : Chateau , name : string, description : string){
+    console.log("chateau test : " + chateau.lat + chateau.lng)
     return this.http.post(
       'api/chateau/',
       {
         "name" : name,
+        "description" : description,
         "numeroAdresse" : chateau.numero_adresse,
         "codePostal" : chateau.code_postal,
         "adresse" : chateau.rue ,
@@ -37,11 +38,14 @@ export class ChateauService {
       },this.SetTokenHeader())
   }
 
-  upDateChateau(chateau : Chateau , name : string){
+  upDateChateau(chateau_id : number, chateau : Chateau , name : string, description : string){
+    console.log("chateau test : " + chateau)
     return this.http.post(
-      'api/chateau/update/' + chateau.id,
+      'api/chateau/update/' + chateau_id,
       {
+        "id" : chateau_id,
         "name" : name,
+        "description" : description,
         "numero_adresse" : chateau.numero_adresse,
         "code_postal" : chateau.code_postal,
         "rue" : chateau.rue ,

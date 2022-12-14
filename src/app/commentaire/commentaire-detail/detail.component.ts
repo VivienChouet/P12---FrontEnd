@@ -22,11 +22,14 @@ export class DetailComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.moderate = false;
-    //this.moderateur = this.authService.isModerateur();
+    this.authService.isAdmin().subscribe(s=> {
+      this.moderate = s
+      return this.moderate
+    })
     this.deleteForm = this.formBuilder.group({})
     console.log("liste des commentaire = " + this.commentaire.id)
     console.log("liste des commentaire = " + this.commentaire.user.firstName)
+
 
   }
 
@@ -34,6 +37,4 @@ export class DetailComponent implements OnInit {
     this.submitted=true;
     this.commentaireService.deleteCommentaire(this.commentaire.id).subscribe(s=>console.log(s))
   }
-
-
 }

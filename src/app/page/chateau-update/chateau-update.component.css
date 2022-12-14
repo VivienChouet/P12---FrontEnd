@@ -28,6 +28,10 @@
 
 .Map-card{
   width: 90%;
-  height: 25rem;
+  height: 20rem;
   margin: auto;
+}
+
+.upload{
+  margin-top: 1rem;
 }

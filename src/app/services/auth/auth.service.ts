@@ -32,11 +32,15 @@ export class AuthService {
       password,
     }).subscribe(user1 => {
       this.user = user1;
-      this.setSession(20000,this.user.token)
+      this.setSession(this.user.token)
     });
   }
 
-  setSession(expiresIn: any, idToken: string) {
+  logout(){
+  localStorage.clear()
+  }
+
+  setSession( idToken: string) {
     console.log('setSession activated');
     localStorage.setItem('id_token', idToken);
     console.log('token save = ' + localStorage.getItem('id_token'));
@@ -72,6 +76,28 @@ export class AuthService {
     return of(false);
   }
 
+  isUserIsAlreadyLoggedIn() {
+    this.token = localStorage.getItem('id_token')
+    const options = this.SetTokenHeader();
+    if(this.token == null){
+      console.log("token = null")
+    }
+    if(this.token!= null){
+      console.log("token =! null : "  + this.token)
+      if(this.user == null){
+          this.http.get<User>(
+        'api/user/verify/getuserconnected',
+        options,
+      ).subscribe(s => {
+        this.user = s;
+      })
+      if(this.token == null){
+        console.log("token = null")
+      }
+    }
+    }
+  }
+
   isAdmin(): Observable<boolean> {
     const options = this.SetTokenHeader();
     if (options) {
@@ -83,24 +109,26 @@ export class AuthService {
     return of(false);
   }
 
-
-  isAuthor(user : User , chateau : Chateau): boolean {
-  if(user.id === chateau.responsable.id){
+  isAuthor(chateau : Chateau): boolean {
+    console.log("is Author : user id = " + this.user.id + " respsonsable chateau id : " + chateau.responsable.id)
+  if(this.user.id === chateau.responsable.id){
     return true;
   }
   return false;
   }
 
-  isAuthorGuard(chateau : Chateau): Observable<boolean> {
+  isAuthorGuard(chateau_id : number): Observable<boolean> {
     const options = this.SetTokenHeader();
-
     if(options){
-      return this.http.post<boolean>('api/user/verify/author',
-      {
-        "chateau_id": chateau.id
-      }
-      ,options);
+      console.log("check si envoi vers api " + chateau_id  )
+     return this.http.get<boolean>('api/user/verify/author/'+chateau_id,
+ options)
     }
+    console.log("retour guard = false ")
     return of (false)
+  }
+
+  isUserHaveAlreadyAComment(chateau : Chateau){
+
   }
 }

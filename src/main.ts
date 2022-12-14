@@ -4,7 +4,6 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppComponent } from './app/app.component';
 
 import { AppModule } from './app/app.module';
-import { CustomErrorHandler } from './app/services/custom-error-handler.service';
 import { environment } from './environments/environment';
 
 if (environment.production) {

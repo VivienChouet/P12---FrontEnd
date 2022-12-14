@@ -9,11 +9,11 @@
         <p>
           {{commentaire.commentaire}}
         </p>
-
-        <form [hidden]="moderate" [formGroup]="deleteForm" (ngSubmit)="onSubmit()">
-          <button type="submit" class="btn btn-danger">delete</button>
+        <form *ngIf="moderate" [formGroup]="deleteForm" (ngSubmit)="onSubmit()">
+         <button type="submit" class="btn btn-danger">delete</button>
         </form>
       </mat-card-content>
     </mat-card>
   </div>
 </div>
+

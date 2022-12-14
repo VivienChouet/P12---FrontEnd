@@ -1,20 +1,21 @@
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Observer, Subscriber, Subscription } from 'rxjs';
+import { AuthService } from './auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilityService {
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private authservice : AuthService) { }
 
   private baseUrl = 'api/files';
 
   upload(file: File, chateau_id : number): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
     formData.append('file', file);
-    const req = new HttpRequest('POST', `${this.baseUrl}/upload/${chateau_id}` , formData, {
+    const req = new HttpRequest('POST', `${this.baseUrl}/${chateau_id}` , formData, {
       reportProgress: true,
       responseType: 'json'
     });
@@ -25,6 +26,12 @@ export class UtilityService {
   }
 
   getFilesByChateauId(chateau_id : number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/chateau/` + chateau_id)
+    return this.http.get(`${this.baseUrl}/chateau/${chateau_id}`)
+  }
+
+  deleteFileById(file_id : number){
+    const option = this.authservice.SetTokenHeader()
+    console.log("delete file : " + this.baseUrl+file_id)
+    this.http.delete(`${this.baseUrl}/${file_id}`,option).subscribe(s => console.log(s))
   }
 }

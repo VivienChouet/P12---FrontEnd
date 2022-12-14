@@ -17,6 +17,7 @@ export class ChateauDetailComponent implements OnInit {
   commentaire!: Commentaire;
   commentaires: Commentaire[] = [];
   chateau!: Chateau;
+  isAuthor!: boolean;
 
 
   constructor(
@@ -29,7 +30,6 @@ export class ChateauDetailComponent implements OnInit {
   ngOnInit(): void {
     this.getCommentaires();
     this.getChateau();
-    console.log("chateau id detail = " + this.chateau_id)
   }
 
   getCommentaires(): void {
@@ -49,7 +49,8 @@ export class ChateauDetailComponent implements OnInit {
   getChateau() {
     this.chateauService.getChateauId(this.chateau_id).subscribe((s) => {
       this.chateau = s;
-      console.log(this.chateau);
+      this.isAuthor = this.authService.isAuthor(this.chateau)
+    
     });
   }
 

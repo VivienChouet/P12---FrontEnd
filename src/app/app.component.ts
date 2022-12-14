@@ -3,6 +3,7 @@ import {fromEvent, Observable} from "rxjs";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {debounceTime, distinctUntilChanged, map, shareReplay, startWith, tap} from "rxjs/operators";
 import { Width } from 'ngx-owl-carousel-o/lib/services/carousel.service';
+import { AuthService } from './services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent implements OnInit {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  constructor(private breakpointObserver: BreakpointObserver, private authService : AuthService) {}
 
   ngOnInit(): void {
     fromEvent(window, 'resize')
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
       startWith(window.innerWidth),
     )
     .subscribe(width => console.log(width));
+    this.authService.isUserIsAlreadyLoggedIn()
   }
 
  }

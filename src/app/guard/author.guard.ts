@@ -1,18 +1,32 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth/auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthorGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
 
-constructor(private authService : AuthService){}
+  authorization: boolean = false;
 
-  canActivate()
-{
-    return true;
-}
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
 
+    const chateau_id = +route.paramMap.get('id')!;
+   return this.authService.isAuthorGuard(chateau_id)
+  }
 }
