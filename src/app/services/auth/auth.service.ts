@@ -17,6 +17,12 @@ export class AuthService {
 
   SetTokenHeader() {
     const token = localStorage.getItem('id_token');
+    if(localStorage.length == 0){
+      localStorage.setItem('id_token', '')
+      const storage = localStorage.getItem('id_token')
+      console.log("storage = " + storage)
+    }
+    if(token != null){
     const options = {
       headers: new HttpHeaders({
         Authorization: token ? token : '',
@@ -25,8 +31,17 @@ export class AuthService {
     console.log('token : ' + token);
     return options;
   }
+  const options = {
+    headers: new HttpHeaders({
+      Authorization: '',
+    }),
+  };
+  return options;
+
+}
 
   login(email: string, password: string) {
+    console.log(localStorage.length)
     return this.http.post<User>('api/user/login', {
       email,
       password,
@@ -37,7 +52,8 @@ export class AuthService {
   }
 
   logout(){
-  localStorage.clear()
+  console.log("demande de logout")
+  localStorage.removeItem('id_token')
   }
 
   setSession( idToken: string) {
@@ -67,7 +83,8 @@ export class AuthService {
 
   isLoggedIn(): Observable<boolean> {
     const options = this.SetTokenHeader();
-    if (options) {
+    const token = localStorage.getItem('id_token')
+    if (token) {
       return this.http.get<boolean>(
         'api/user/verify/auth',
         options
@@ -79,10 +96,11 @@ export class AuthService {
   isUserIsAlreadyLoggedIn() {
     this.token = localStorage.getItem('id_token')
     const options = this.SetTokenHeader();
-    if(this.token == null){
+    console.log("token du storage = " + this.token)
+    if(this.token === null){
       console.log("token = null")
     }
-    if(this.token!= null){
+    if(this.token != null ){
       console.log("token =! null : "  + this.token)
       if(this.user == null){
           this.http.get<User>(
@@ -91,9 +109,7 @@ export class AuthService {
       ).subscribe(s => {
         this.user = s;
       })
-      if(this.token == null){
-        console.log("token = null")
-      }
+
     }
     }
   }

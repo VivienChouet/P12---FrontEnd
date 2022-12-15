@@ -31,7 +31,9 @@ export class UtilityService {
 
   deleteFileById(file_id : number){
     const option = this.authservice.SetTokenHeader()
+    if(option){
     console.log("delete file : " + this.baseUrl+file_id)
     this.http.delete(`${this.baseUrl}/${file_id}`,option).subscribe(s => console.log(s))
   }
+}
 }

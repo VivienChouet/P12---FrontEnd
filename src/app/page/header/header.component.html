@@ -38,10 +38,12 @@
           <mat-icon>how_to_reg</mat-icon>
           <span>Login</span>
         </button>
-        <button mat-menu-item color="primary" routerLinkActive="active" routerLink="auth/logout">
-          <mat-icon>power_settings_new</mat-icon>
-          <span>Logout</span>
-        </button>
+        <form [formGroup]="logoutForm" (ngSubmit)="onSubmit()">
+          <button type="submit"mat-menu-item color="primary">
+            <mat-icon>power_settings_new</mat-icon>
+            <span>Logout</span>
+          </button>
+         </form>
       </mat-menu>
     </mat-toolbar>
   </mat-sidenav-content>
