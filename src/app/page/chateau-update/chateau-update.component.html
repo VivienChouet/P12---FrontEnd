@@ -12,7 +12,7 @@
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="{{chateau.numero_adresse}} {{chateau.rue}} {{chateau.ville}}"
+            <input matInput placeholder="{{chateau.numeroAdresse}} {{chateau.adresse}} {{chateau.ville}}"
               ngx-google-places-autocomplete #places="ngx-places" [options]="options"
               (onAddressChange)="handleAddressChange($event)" />
           </mat-form-field>

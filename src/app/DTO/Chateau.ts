@@ -5,10 +5,10 @@ export interface Chateau {
 
   id : number;
   name : string;
-  numero_adresse : number ;
-  rue : string ;
+  numeroAdresse : number ;
+  adresse : string ;
   ville : string ;
-  code_postal : number ;
+  codePostal : number ;
   lat : number;
   lng : number
   localisation : string ;

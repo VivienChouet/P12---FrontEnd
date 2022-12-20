@@ -63,14 +63,14 @@ export class ChateauUpdateComponent implements OnInit {
         x.types.includes('street_number')
       )?.short_name;
       if (numero_adresse) {
-        chateau.numero_adresse = +numero_adresse;
+        chateau.numeroAdresse = +numero_adresse;
       }
 
       const rue = address.address_components.find((x) =>
         x.types.includes('route')
       )?.short_name;
       if (rue) {
-        chateau.rue = rue;
+        chateau.adresse = rue;
       }
 
       const ville = address.address_components.find((x) =>
@@ -84,7 +84,7 @@ export class ChateauUpdateComponent implements OnInit {
         x.types.includes('postal_code')
       )?.short_name;
       if (codePostal) {
-        chateau.code_postal = +codePostal;
+        chateau.codePostal = +codePostal;
       }
 
       const lat = address.geometry.location.lat();
@@ -98,7 +98,7 @@ export class ChateauUpdateComponent implements OnInit {
 
       this.chateau = chateau;
       this.chateaux[0] = this.chateau;
-      console.log("chateau update =  " + this.chateau);
+      console.log("chateau update =  " + this.chateau.adresse);
       return this.chateau;
     }
   }

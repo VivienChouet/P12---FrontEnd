@@ -29,9 +29,9 @@ export class ChateauService {
       {
         "name" : name,
         "description" : description,
-        "numeroAdresse" : chateau.numero_adresse,
-        "codePostal" : chateau.code_postal,
-        "adresse" : chateau.rue ,
+        "numeroAdresse" : chateau.numeroAdresse,
+        "codePostal" : chateau.codePostal,
+        "adresse" : chateau.adresse ,
         "ville" : chateau.ville,
         "lat" : chateau.lat,
         "lng" : chateau.lng
@@ -39,16 +39,16 @@ export class ChateauService {
   }
 
   upDateChateau(chateau_id : number, chateau : Chateau , name : string, description : string){
-    console.log("chateau test : " + chateau)
+    console.log("chateau test : " + chateau.adresse)
     return this.http.post(
       'api/chateau/update/' + chateau_id,
       {
         "id" : chateau_id,
         "name" : name,
         "description" : description,
-        "numero_adresse" : chateau.numero_adresse,
-        "code_postal" : chateau.code_postal,
-        "rue" : chateau.rue ,
+        "numeroAdresse" : chateau.numeroAdresse,
+        "codePostal" : chateau.codePostal,
+        "adresse" : chateau.adresse ,
         "ville" : chateau.ville,
         "lat" : chateau.lat,
         "lng" : chateau.lng

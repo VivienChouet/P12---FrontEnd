@@ -30,6 +30,7 @@ export class ChateauDetailComponent implements OnInit {
   ngOnInit(): void {
     this.getCommentaires();
     this.getChateau();
+    console.log("chateau detail = " + this.chateau.adresse)
   }
 
   getCommentaires(): void {
@@ -50,7 +51,7 @@ export class ChateauDetailComponent implements OnInit {
     this.chateauService.getChateauId(this.chateau_id).subscribe((s) => {
       this.chateau = s;
       this.isAuthor = this.authService.isAuthor(this.chateau)
-    
+
     });
   }
 

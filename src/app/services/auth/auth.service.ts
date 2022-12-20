@@ -84,13 +84,13 @@ export class AuthService {
   isLoggedIn(): Observable<boolean> {
     const options = this.SetTokenHeader();
     const token = localStorage.getItem('id_token')
-    if (token) {
+    console.log("is logged in ? ")
+
       return this.http.get<boolean>(
         'api/user/verify/auth',
         options
       );
-    }
-    return of(false);
+
   }
 
   isUserIsAlreadyLoggedIn() {

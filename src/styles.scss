@@ -1,6 +1,6 @@
 /* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';
-@import '~css-star-rating/scss/star-rating';
+@import 'bootstrap/scss/bootstrap';
+@import 'css-star-rating/scss/star-rating';
 
 html, body { height: 100%; width: 100%; background-color:  #303030}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
